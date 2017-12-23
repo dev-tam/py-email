@@ -10,18 +10,19 @@ class Handler:
     def sendEmail(self, username, password, to_list, message):
         host = "smtp.gmail.com"
         port = 587
-        self.username = username
-        self.password = password
+        self.username = Gtk.Entry.get_text("username")
+        self.password = Gtk.Entry.get_text("password")
         from_email = username
-        self.to_list = to_list
-        self.message = message
+        self.to_list = Gtk.Entry.get_text("to_list")
+        self.message = Gtk.Entry.get_text("message")
 
         conn_email = SMTP(host, port)
         conn_email.ehlo()
         conn_email.starttls()
         try:
-            conn_email.login(username, password)
-            conn_email.sendmail(from_email, to_list, message)
+            pass
+            # conn_email.login(username, password)
+            # conn_email.sendmail(from_email, to_list, message)
         except SMTPAuthenticationError:
             print("Could not login!")
 
