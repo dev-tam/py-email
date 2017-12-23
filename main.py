@@ -23,7 +23,7 @@ class Handler:
 
         try:
             self.conn_email.login(self.username, self.password)
-            self.sendmail(from_email, self.to_list, self.message)
+            self.conn_email.sendmail(from_email, self.to_list, self.message)
         except SMTPAuthenticationError:
             print("Could not login!")
         except:
