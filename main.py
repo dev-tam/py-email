@@ -7,28 +7,28 @@ from gi.repository import Gtk
 
 
 class Handler:
-    def sendEmail(self, username, password, to_list, message):
+    def __init__(self):
         host = "smtp.gmail.com"
         port = 587
+        conn_email = SMTP(host, port)
+        print(conn_email.ehlo())
+        print(conn_email.starttls())
+
+    def sendEmail(self, username, password, to_list, message):
         self.username = Gtk.Entry.get_text("username")
         self.password = Gtk.Entry.get_text("password")
-        from_email = username
         self.to_list = Gtk.Entry.get_text("to_list")
         self.message = Gtk.Entry.get_text("message")
+        from_email = username
 
-        conn_email = SMTP(host, port)
-        conn_email.ehlo()
-        conn_email.starttls()
         try:
-            pass
-            # conn_email.login(username, password)
-            # conn_email.sendmail(from_email, to_list, message)
+            self.conn_email.login(username, password)
+            self.sendmail(from_email, to_list, message)
         except SMTPAuthenticationError:
             print("Could not login!")
-
         except:
             print("An error occured!")
-        conn_email.quit()
+        self.conn_email.quit()
 
 
     def onDeleteWindow(self, *args):
@@ -40,6 +40,7 @@ builder.add_from_file("design.glade")
 builder.connect_signals(Handler())
 
 window = builder.get_object("mainWindow")
+window.set_title("Send Gmail")
 window.show_all()
 
 Gtk.main()
