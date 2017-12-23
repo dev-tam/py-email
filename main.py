@@ -14,16 +14,16 @@ class Handler:
         print(conn_email.ehlo())
         print(conn_email.starttls())
 
-    def sendEmail(self, username, password, to_list, message):
+    def sendEmail(self):
         self.username = Gtk.Entry.get_text("username")
         self.password = Gtk.Entry.get_text("password")
         self.to_list = Gtk.Entry.get_text("to_list")
         self.message = Gtk.Entry.get_text("message")
-        from_email = username
+        from_email = self.username
 
         try:
-            self.conn_email.login(username, password)
-            self.sendmail(from_email, to_list, message)
+            self.conn_email.login(self.username, self.password)
+            self.sendmail(from_email, self.to_list, self.message)
         except SMTPAuthenticationError:
             print("Could not login!")
         except:
